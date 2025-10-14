@@ -1,0 +1,42 @@
+{
+    "name": "spiralink/vapi-php-sdk",
+    "description": "An unofficial PHP SDK for accessing Vapi's API.",
+    "license": "MIT",
+    "keywords": [
+        "vapi",
+        "api",
+        "sdk"
+    ],
+    "authors": [
+        {
+            "name": "Muhammed Sarı",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~8.4",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.4.1",
+        "phpstan/phpstan": "^1.12.32",
+        "laravel/pint": "^1.25.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vapi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vapi\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyze": "phpstan analyze src tests --memory-limit=2G",
+        "format": "@php ./vendor/bin/pint --dirty",
+        "test": "./vendor/bin/phpunit",
+        "verify": ["@analyze", "@test"]
+    }
+}

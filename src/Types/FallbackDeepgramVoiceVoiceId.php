@@ -1,0 +1,62 @@
+<?php declare(strict_types=1);
+
+namespace Vapi\Types;
+
+enum FallbackDeepgramVoiceVoiceId: string
+{
+    case Asteria = 'asteria';
+    case Luna = 'luna';
+    case Stella = 'stella';
+    case Athena = 'athena';
+    case Hera = 'hera';
+    case Orion = 'orion';
+    case Arcas = 'arcas';
+    case Perseus = 'perseus';
+    case Angus = 'angus';
+    case Orpheus = 'orpheus';
+    case Helios = 'helios';
+    case Zeus = 'zeus';
+    case Thalia = 'thalia';
+    case Andromeda = 'andromeda';
+    case Helena = 'helena';
+    case Apollo = 'apollo';
+    case Aries = 'aries';
+    case Amalthea = 'amalthea';
+    case Atlas = 'atlas';
+    case Aurora = 'aurora';
+    case Callista = 'callista';
+    case Cora = 'cora';
+    case Cordelia = 'cordelia';
+    case Delia = 'delia';
+    case Draco = 'draco';
+    case Electra = 'electra';
+    case Harmonia = 'harmonia';
+    case Hermes = 'hermes';
+    case Hyperion = 'hyperion';
+    case Iris = 'iris';
+    case Janus = 'janus';
+    case Juno = 'juno';
+    case Jupiter = 'jupiter';
+    case Mars = 'mars';
+    case Minerva = 'minerva';
+    case Neptune = 'neptune';
+    case Odysseus = 'odysseus';
+    case Ophelia = 'ophelia';
+    case Pandora = 'pandora';
+    case Phoebe = 'phoebe';
+    case Pluto = 'pluto';
+    case Saturn = 'saturn';
+    case Selene = 'selene';
+    case Theia = 'theia';
+    case Vesta = 'vesta';
+    case Celeste = 'celeste';
+    case Estrella = 'estrella';
+    case Nestor = 'nestor';
+    case Sirio = 'sirio';
+    case Carina = 'carina';
+    case Alvaro = 'alvaro';
+    case Diana = 'diana';
+    case Aquila = 'aquila';
+    case Selena = 'selena';
+    case Javier = 'javier';
+}

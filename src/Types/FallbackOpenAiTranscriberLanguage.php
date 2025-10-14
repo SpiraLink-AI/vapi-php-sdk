@@ -1,0 +1,64 @@
+<?php declare(strict_types=1);
+
+namespace Vapi\Types;
+
+enum FallbackOpenAiTranscriberLanguage: string
+{
+    case Af = 'af';
+    case Ar = 'ar';
+    case Hy = 'hy';
+    case Az = 'az';
+    case Be = 'be';
+    case Bs = 'bs';
+    case Bg = 'bg';
+    case Ca = 'ca';
+    case Zh = 'zh';
+    case Hr = 'hr';
+    case Cs = 'cs';
+    case Da = 'da';
+    case Nl = 'nl';
+    case En = 'en';
+    case Et = 'et';
+    case Fi = 'fi';
+    case Fr = 'fr';
+    case Gl = 'gl';
+    case De = 'de';
+    case El = 'el';
+    case He = 'he';
+    case Hi = 'hi';
+    case Hu = 'hu';
+    case Is = 'is';
+    case Id = 'id';
+    case It = 'it';
+    case Ja = 'ja';
+    case Kn = 'kn';
+    case Kk = 'kk';
+    case Ko = 'ko';
+    case Lv = 'lv';
+    case Lt = 'lt';
+    case Mk = 'mk';
+    case Ms = 'ms';
+    case Mr = 'mr';
+    case Mi = 'mi';
+    case Ne = 'ne';
+    case No = 'no';
+    case Fa = 'fa';
+    case Pl = 'pl';
+    case Pt = 'pt';
+    case Ro = 'ro';
+    case Ru = 'ru';
+    case Sr = 'sr';
+    case Sk = 'sk';
+    case Sl = 'sl';
+    case Es = 'es';
+    case Sw = 'sw';
+    case Sv = 'sv';
+    case Tl = 'tl';
+    case Ta = 'ta';
+    case Th = 'th';
+    case Tr = 'tr';
+    case Uk = 'uk';
+    case Ur = 'ur';
+    case Vi = 'vi';
+    case Cy = 'cy';
+}

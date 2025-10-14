@@ -1,0 +1,160 @@
+<?php declare(strict_types=1);
+
+namespace Vapi\Types;
+
+use Vapi\Core\Json\JsonProperty;
+use Vapi\Core\Json\JsonSerializableType;
+use Vapi\Core\Types\ArrayType;
+
+final class VariableExtractionPlan extends JsonSerializableType
+{
+    /**
+     * This is the schema to extract.
+     *
+     * Examples:
+     * 1. To extract object properties, you can use the following schema:
+     * ```json
+     * {
+     *   "type": "object",
+     *   "properties": {
+     *     "name": {
+     *       "type": "string"
+     *     },
+     *     "age": {
+     *       "type": "number"
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * These will be extracted as `{{ name }}` and `{{ age }}` respectively. To emphasize, object properties are extracted as direct global variables.
+     *
+     * 2. To extract nested properties, you can use the following schema:
+     * ```json
+     * {
+     *   "type": "object",
+     *   "properties": {
+     *     "name": {
+     *       "type": "object",
+     *       "properties": {
+     *         "first": {
+     *           "type": "string"
+     *         },
+     *         "last": {
+     *           "type": "string"
+     *         }
+     *       }
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * These will be extracted as `{{ name }}`. And, `{{ name.first }}` and `{{ name.last }}` will be accessible.
+     *
+     * 3. To extract array items, you can use the following schema:
+     * ```json
+     * {
+     *   "type": "array",
+     *   "title": "zipCodes",
+     *   "items": {
+     *     "type": "string"
+     *   }
+     * }
+     * ```
+     *
+     * This will be extracted as `{{ zipCodes }}`. To access the array items, you can use `{{ zipCodes[0] }}` and `{{ zipCodes[1] }}`.
+     *
+     * 4. To extract array of objects, you can use the following schema:
+     *
+     * ```json
+     * {
+     *   "type": "array",
+     *   "name": "people",
+     *   "items": {
+     *     "type": "object",
+     *     "properties": {
+     *       "name": {
+     *         "type": "string"
+     *       },
+     *       "age": {
+     *         "type": "number"
+     *       },
+     *       "zipCodes": {
+     *         "type": "array",
+     *         "items": {
+     *           "type": "string"
+     *         }
+     *       }
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * This will be extracted as `{{ people }}`. To access the array items, you can use `{{ people[n].name }}`, `{{ people[n].age }}`, `{{ people[n].zipCodes }}`, `{{ people[n].zipCodes[0] }}` and `{{ people[n].zipCodes[1] }}`.
+     *
+     * @var ?JsonSchema $schema
+     */
+    #[JsonProperty('schema')]
+    public ?JsonSchema $schema;
+
+    /**
+     * These are additional variables to create.
+     *
+     * These will be accessible during the call as `{{key}}` and stored in `call.artifact.variableValues` after the call.
+     *
+     * Example:
+     * ```json
+     * {
+     *   "aliases": [
+     *     {
+     *       "key": "customerName",
+     *       "value": "{{name}}"
+     *     },
+     *     {
+     *       "key": "fullName",
+     *       "value": "{{firstName}} {{lastName}}"
+     *     },
+     *     {
+     *       "key": "greeting",
+     *       "value": "Hello {{name}}, welcome to {{company}}!"
+     *     },
+     *     {
+     *       "key": "customerCity",
+     *       "value": "{{addresses[0].city}}"
+     *     },
+     *     {
+     *       "key": "something",
+     *       "value": "{{any liquid}}"
+     *     }
+     *   ]
+     * }
+     * ```
+     *
+     * This will create variables `customerName`, `fullName`, `greeting`, `customerCity`, and `something`. To access these variables, you can reference them as `{{customerName}}`, `{{fullName}}`, `{{greeting}}`, `{{customerCity}}`, and `{{something}}`.
+     *
+     * @var ?array<VariableExtractionAlias> $aliases
+     */
+    #[JsonProperty('aliases'), ArrayType([VariableExtractionAlias::class])]
+    public ?array $aliases;
+
+    /**
+     * @param array{
+     *   schema?: ?JsonSchema,
+     *   aliases?: ?array<VariableExtractionAlias>,
+     * } $values
+     */
+    public function __construct(
+        array $values = [],
+    ) {
+        $this->schema = $values['schema'] ?? null;
+        $this->aliases = $values['aliases'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
+}

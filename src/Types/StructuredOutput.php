@@ -1,0 +1,145 @@
+<?php declare(strict_types=1);
+
+namespace Vapi\Types;
+
+use DateTime;
+use Vapi\Core\Json\JsonProperty;
+use Vapi\Core\Json\JsonSerializableType;
+use Vapi\Core\Types\ArrayType;
+use Vapi\Core\Types\Date;
+
+final class StructuredOutput extends JsonSerializableType
+{
+    /**
+     * This is the model that will be used to extract the structured output.
+     *
+     * To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
+     * Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
+     * Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+     * i.e.:
+     * {{structuredOutput}}
+     * {{structuredOutput.name}}
+     * {{structuredOutput.description}}
+     * {{structuredOutput.schema}}
+     *
+     * If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
+     * If messages or required fields are not specified, the default system and user prompts will be used.
+     *
+     * @var ?StructuredOutputModel $model
+     */
+    #[JsonProperty('model')]
+    public ?StructuredOutputModel $model;
+
+    /**
+     * @var string $id This is the unique identifier for the structured output.
+     */
+    #[JsonProperty('id')]
+    public string $id;
+
+    /**
+     * @var string $orgId This is the unique identifier for the org that this structured output belongs to.
+     */
+    #[JsonProperty('orgId')]
+    public string $orgId;
+
+    /**
+     * @var DateTime $createdAt This is the ISO 8601 date-time string of when the structured output was created.
+     */
+    #[JsonProperty('createdAt'), Date(Date::TYPE_DATETIME)]
+    public DateTime $createdAt;
+
+    /**
+     * @var DateTime $updatedAt This is the ISO 8601 date-time string of when the structured output was last updated.
+     */
+    #[JsonProperty('updatedAt'), Date(Date::TYPE_DATETIME)]
+    public DateTime $updatedAt;
+
+    /**
+     * @var string $name This is the name of the structured output.
+     */
+    #[JsonProperty('name')]
+    public string $name;
+
+    /**
+     * This is the description of what the structured output extracts.
+     *
+     * Use this to provide context about what data will be extracted and how it will be used.
+     *
+     * @var ?string $description
+     */
+    #[JsonProperty('description')]
+    public ?string $description;
+
+    /**
+     * These are the assistant IDs that this structured output is linked to.
+     *
+     * When linked to assistants, this structured output will be available for extraction during those assistant's calls.
+     *
+     * @var ?array<string> $assistantIds
+     */
+    #[JsonProperty('assistantIds'), ArrayType(['string'])]
+    public ?array $assistantIds;
+
+    /**
+     * These are the workflow IDs that this structured output is linked to.
+     *
+     * When linked to workflows, this structured output will be available for extraction during those workflow's execution.
+     *
+     * @var ?array<string> $workflowIds
+     */
+    #[JsonProperty('workflowIds'), ArrayType(['string'])]
+    public ?array $workflowIds;
+
+    /**
+     * This is the JSON Schema definition for the structured output.
+     *
+     * Defines the structure and validation rules for the data that will be extracted. Supports all JSON Schema features including:
+     * - Objects and nested properties
+     * - Arrays and array validation
+     * - String, number, boolean, and null types
+     * - Enums and const values
+     * - Validation constraints (min/max, patterns, etc.)
+     * - Composition with allOf, anyOf, oneOf
+     *
+     * @var JsonSchema $schema
+     */
+    #[JsonProperty('schema')]
+    public JsonSchema $schema;
+
+    /**
+     * @param array{
+     *   id: string,
+     *   orgId: string,
+     *   createdAt: DateTime,
+     *   updatedAt: DateTime,
+     *   name: string,
+     *   schema: JsonSchema,
+     *   model?: ?StructuredOutputModel,
+     *   description?: ?string,
+     *   assistantIds?: ?array<string>,
+     *   workflowIds?: ?array<string>,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->model = $values['model'] ?? null;
+        $this->id = $values['id'];
+        $this->orgId = $values['orgId'];
+        $this->createdAt = $values['createdAt'];
+        $this->updatedAt = $values['updatedAt'];
+        $this->name = $values['name'];
+        $this->description = $values['description'] ?? null;
+        $this->assistantIds = $values['assistantIds'] ?? null;
+        $this->workflowIds = $values['workflowIds'] ?? null;
+        $this->schema = $values['schema'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
+}
